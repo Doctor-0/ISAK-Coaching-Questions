@@ -18,26 +18,15 @@ body {
     .pentagon:hover {
       fill: #2D2D2D;
     }
-    .pentagon-1 {
+    .shard-1 {
     fill: #EFE3E5;
     }
-    .pentagon-2 {
+    .shard-2 {
     fill: #F0D9D8;
     }
-    .pentagon-3 {
+    .shard-3 {
     fill: #F1CDC5;
     }
-    .pentagon-4 {
+    .shard-4 {
     fill: #F2C1B6;
-    }
-    .pentagon-5 {
-    fill: #F3AB97;
-    stroke-width: 1px;
-    stroke: rgba(0, 0, 0, .5);
-    }
-    .pentagonAbility {
-    /*fill: #F17D61;*/
-    fill: rgba(241, 125, 97, .6);
-    stroke-width: 1px;
-    stroke: rgba(241, 125, 97, 1);
     }

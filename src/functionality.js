@@ -1,67 +1,74 @@
-// var svgPentagon = $('#J-svg-pentagon');
-// var points = {
-//     base : ["6", "1", "10.7552826", "4.45491503", "8.93892626", "10.045085", "3.06107374", "10.045085", "1.24471742", "4.45491503"],
-//     pointsAbility : []
-// }
-// var setPentagon = function(num) {
-//     for (i=1;i<=num;i++) {
-//         var pointsChildren = 'points' + i;
-//         points[pointsChildren] = new Array();
-//         for (j=0;j<points.base.length;j++) {
-//             points[pointsChildren].push((parseFloat(points.base[j]) * (6 + i * 4)).toFixed(2));
-//             points[pointsChildren][j] = parseFloat(points[pointsChildren][j]) - (i * 24);
-//         }
-//         svgPentagon.find('.pentagon-' + i).attr('points', points[pointsChildren].join(' '));
-//     }
-// }
-// setPentagon(5);
+/**
+ * [distanceBetweenPoints description]
+ * @param  {[Arrray[][]]} points [A 2D array containing two sub arrays]
+ * @return {[int]}        [The distance between the two points]
+ */
+
+function distanceBetweenPoints(points){
+  if(points.length > 2){
+    console.log("distanceBetweenPoints() error: more then two points given");
+    return -1;
+  } else {
+    a = points[0][0] - points[1][0];
+    b = points[0][1] - points[1][1];
+    return Math.sqrt(a*a + b*b);
+  }
+}
 
 /**
- * Creates a pentagon at the given id
+ * Creates a pentagon at the given id with
  * @param  {[int]} x  [width of pentagon]
  * @param  {[int]} y  [height of pentagon]
  * @param  {[string]} id [id of SVG element to place pentagon]
- * @param  {{int}} scaleX [scales in the x dimension] optional
- * @param  {{int}} scaleY [scales in the y dimension] optional
- * @return {[type]}    [description]
+ * @param  {[int]} scaleX [scales in the x dimension] optional
+ * @param  {[int]} scaleY [scales in the y dimension] optional
  */
-const generatePentagon = function(x, y, id, scaleX=1, scaleY=1) {
+const generatePentagon = function(x, y, id, num=0, scaleX=1, scaleY=1) {
   var svg = $(id);
 
-  // Points follow clockwise around the pentagon,
+  // 1. Points follow clockwise around the pentagon,
   // starting from the top most point
   let base = [[x/2, 0], //Top most point
               [x, y/2],
               [(3*x)/4, y],
               [x/4, y],
-              [0, y/2]]
+              [0, y/2]];
 
-  //Apply scales if they exist
+  //2. Apply scales if they exist
   if(scaleX !== 1 || scaleY !== 1){
     base.forEach((point) => point[0] *= scaleX);
     base.forEach((point) => point[1] *= scaleY);
   }
 
-  //Set width and height of frame based on points
+  let center = [x/2, y/2];
+
+  //3. Set width and height of frame based on points
   svg.attr('width', base[1][0]); //base[1][0] is the right-most point
   svg.attr('height', base[2][1]) //base[2][1] || base[3][1] is the bottom-most point
 
-  /**
-   * Creates a pentagon
-   * @return {[type]} [description]
-   */
-  function createPentagon() {
-    let pointsPentagon = "",
-        pentagon = svg.find('.pentagon');
+  //4. Generate the pentagon
+  let pointsPentagon = "",
+      pentagon = svg.find('.pentagon');
 
-    for(let i=0;i<base.length;i++){
-      pointsPentagon += base[i].join(",") + " ";
-    }
-
-    pentagon.attr('points', pointsPentagon)
+  for(let i=0;i<base.length;i++){
+    pointsPentagon += base[i].join(",") + " ";
   }
 
-  createPentagon();
+  pentagon.attr('points', pointsPentagon)
+
+  /**
+   * Creates base.length-1 shards for each triangle
+   * @param {[int]} num [the number of levels per shard]
+   * @return {[type]} [description]
+   */
+  function createShards() {
+    for(let i=0;i<base.length-1;i++){
+      let b = distanceBetweenPoints(base.slice(i,(i+2)%base.length));
+
+    }
+  }
+
+  createShards()
 }
 
-generatePentagon(500, 500, '#J-svg-pentagon', 1, 0.90);
+generatePentagon(500, 500, '#J-svg-pentagon',0, 1, 0.90);
