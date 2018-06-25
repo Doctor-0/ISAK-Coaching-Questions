@@ -18,15 +18,6 @@ body {
     .pentagon:hover {
       fill: #2D2D2D;
     }
-    .shard-0 {
+    .shard:hover {
     fill: #F2C1B6;
-    }
-    .shard-1 {
-    fill: #EFE3E5;
-    }
-    .shard-2 {
-    fill: #F0D9D8;
-    }
-    .shard-3 {
-    fill: #F1CDC5;
     }
