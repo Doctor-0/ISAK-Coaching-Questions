@@ -1,31 +1,34 @@
-const generatePentagon = function(x, y, id, numShards=0, scaleX=1, scaleY=1) {
+const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
   var $svg = $(id);
 
-  //1. Apply scales if they exist
-  if(scaleX !== 1 || scaleY !== 1){
-    x *= scaleX;
-    y *= scaleY;
+  //Calculates the points of the pentagon with
+  function genPentagonPoints(ptX=x, ptY=y, offSetX=0, offSetY=0){
+    // 2. Points follow clockwise around the pentagon,
+    // starting from the top most point
+
+    let points = [[ptX/2, 0+offSetY], //Top most point
+                  [ptX-offSetX, ptY/2],
+                  [((3*ptX)/4)-(offSetX/2), ptY-offSetY],
+                  [(ptX/4)+(offSetX/2), ptY-offSetY],
+                  [0+offSetX, (ptY)/2]];
+    points.forEach((point) => {
+      point[0] *= scaleX;
+      point[1] *= scaleY;
+    });
+    return points
   }
 
-  // 2. Points follow clockwise around the pentagon,
-  // starting from the top most point
-  var points = [[x/2, 0], //Top most point
-              [x, y/2],
-              [(3*x)/4, y],
-              [x/4, y],
-              [0, y/2]];
+  var points = genPentagonPoints();
 
   //Calculate center
-  let center = [x/2, y/2];
+  let center = [(x*scaleX)/2, (y*scaleY)/2];
 
   //Testing
-  // let centerCircle = makeSVG('circle', {
-  //   cx:center[0],
-  //   cy:center[1],
-  //   r:"10",
-  //   fill:"FFF"
+  // let test1 = makeSVG('polygon', {
+  //   fill:"#FFF",
+  //   points: ptsToString(genPentagonPoints(x,y,125,125))
   // })
-  // $(id).append(centerCircle);
+  // $(id).append(test1);
 
   //3. Set width and height of frame pointsd on points
   $svg.attr({
@@ -34,61 +37,65 @@ const generatePentagon = function(x, y, id, numShards=0, scaleX=1, scaleY=1) {
   });
 
   //4. Generate the pentagon
-  let pointsPentagon = '',
-      pentagon = $svg.find('.pentagon');
-
-  for(let i=0;i<points.length;i++){
-    pointsPentagon += points[i].join(",") + " ";
-  }
-
-  pentagon.attr('points', pointsPentagon)
+  $svg.find('.pentagon').attr('points', ptsToString(points))
 
   // 5. Generate the individual shards shards pointsd on the {numShards}
   // Each shard uses the previous two points to calculate its' own
   // points.
-  for(let i=0;i<points.length;i++){
-    let pointSet = [points[i],points[(i+1) % (points.length)]],
-        base = distanceBetweenPoints(pointSet).toFixed(2),
-        height = distanceBetweenPoints([midPoint(pointSet), center]).toFixed(2),
-        shards = [];
+  let shards = [];
 
-    /**
-     * Generates the shards recursively.
-     * @param  {[type]} topPoints [description]
-     * @param  {[type]} n         [description]
-     * @return {[DOM Objects]}    returns a list of DOM objects
-     */
-    function generateShard(topPoints, n=numShards){
-      if(n === 1){
-        $svg.append(makeSVG('polygon', {
-          class: "shard",
-          fill:"#7CE0F9",
-          points: topPoints.concat([center]).map((point) => point.join(',')).join(' ')
-        }));
+  for(let i=1;i<=numLevels;i++){
+    let offSetX_prev = Math.floor(((i-1)/numLevels)*(x/2)),
+        offSetY_prev = Math.floor(((i-1)/numLevels)*(y/2)),
+        offSetX_curr = Math.floor((i/numLevels)*(x/2)),
+        offSetY_curr = Math.floor((i/numLevels)*(y/2))
+        points_Prev = genPentagonPoints(x,y, offSetX_prev, offSetY_prev),
+        points_Curr = genPentagonPoints(x,y, offSetX_curr, offSetY_curr)
+    console.log(i,"|\nOffset_0: ", offSetX_prev, ", ", offSetY_prev,
+        "\nOffset_1: ", offSetX_curr, ", ", offSetY_curr);
+
+    // let test3 = makeSVG('polygon', {
+    //   fill:"#7"+i+i+i+i+i,
+    //   points: ptsToString(nextPoints)
+    // })
+    // shards.push(test3);
+
+    for(let j=0;j<points.length;j++){
+      let a = j,                       //First point
+          b = (j+1) % (points.length), //Second Point
+          pointSet = [points_Prev[a],points_Prev[b]];
+
+      // Checks if it needs to make triangles
+      if(i >= numLevels-1 ){ // Only activates if it's the second to the last lvl
+        pointSet = pointSet.concat([center]);
       } else {
-        let nextPointSet = [[((2*n+1)*base)/(2*n),height/n],[base/(2*n), height/n]],
-            shardPoints  = topPoints.concat(nextPointSet);
-        console.log(i,": ",shardPoints);
-        $svg.append(makeSVG('polygon', {
-          class: "shard",
-          fill: "#7CE0F9",
-          points: shardPoints.map((point) => point.join(',')).join(' ')
-        }));
-        generateShard(nextPointSet, n-1);
+        pointSet = pointSet.concat([points_Curr[b], points_Curr[a]]);
       }
-    }
+      console.log(j, ": ", pointSet);
 
-    generateShard(pointSet);
+
+      shards.push(makeSVG('polygon', {
+        class: "shard",
+        fill: "#7"+i+i+i+j+j,
+        points: ptsToString(pointSet)
+      }));
+
+    }
   }
+
+  $svg.append(shards);
+
 }
+
 
 /**
  * Creates a pentagon at the given id with
  * @param  {[int]} x  [width of pentagon]
  * @param  {[int]} y  [height of pentagon]
  * @param  {[string]} id [id of SVG element to place pentagon]
- * @param  {[int]} numShards [the number of shards per slice]
+ * @param  {[int]} numLevels [the number of shards per slice]
  * @param  {[int]} scaleX [scales in the x dimension] optional
  * @param  {[int]} scaleY [scales in the y dimension] optional
  */
-generatePentagon(500, 500, '#J-svg-pentagon', 1, 1, 0.95);
+// generatePentagon(500, 500, '#J-svg-pentagon', 1, 1, 0.9);
+generatePentagon(500, 500, '#J-svg-pentagon', 3, 1.10, 1);

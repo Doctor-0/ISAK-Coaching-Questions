@@ -57,3 +57,13 @@ function makeSVG(tag, attrs) {
         el.setAttribute(k, attrs[k]);
     return el;
 }
+
+/**
+ * Cnverts an array of array of points, into a string
+ * @param  {Array[Array[int,int]]} pts An array of points
+ * @return {String}     Points separating x and y with a
+ *                      comma, and each point with a space.
+ */
+function ptsToString(pts){
+  return pts.map((point) => point.join(',')).join(' ');
+}

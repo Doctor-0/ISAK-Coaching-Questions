@@ -15,9 +15,9 @@ body {
       -moz-transform:rotate(36deg);
       //transform:rotate(36deg);
     }
-    .pentagon:hover {
+    /* .pentagon:hover {
       fill: #2D2D2D;
-    }
+    } */
     .shard:hover {
     fill: #F2C1B6;
     }
