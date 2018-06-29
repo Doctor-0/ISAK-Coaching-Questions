@@ -21,14 +21,25 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 0.7fr 1fr 0.7fr;
-  grid-template-rows: auto 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr 0.2fr;
 }
 
-.title {
-  color: #009b90;
+.title, .footer {
+  color: #FFF;
   grid-column: 1 / -1;
-  margin-left: 1.5em;
-  font-size: 1.5em;
+  display:inline-block;
+  margin: 0.5em inherit;
+  background-color: #009b90;
+}
+
+.title h1 {
+  float:left;
+  font-size: 3em;
+}
+
+.UWC-logo {
+  float: left;
+  margin: auto 0.75em auto 1em;
 }
 
 .text {
