@@ -1,3 +1,4 @@
+
 const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
   var $svg = $(id);
 
@@ -23,13 +24,6 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
 
-  //Testing
-  // let test1 = makeSVG('polygon', {
-  //   fill:"#FFF",
-  //   points: ptsToString(genPentagonPoints(x,y,125,125))
-  // })
-  // $(id).append(test1);
-
   //3. Set width and height of frame pointsd on points
   $svg.attr({
     width: points[1][0], //points[1][0] is the right-most point
@@ -51,14 +45,6 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
         offSetY_curr = Math.floor((i/numLevels)*(y/2))
         points_Prev = genPentagonPoints(x,y, offSetX_prev, offSetY_prev),
         points_Curr = genPentagonPoints(x,y, offSetX_curr, offSetY_curr)
-    console.log(i,"|\nOffset_0: ", offSetX_prev, ", ", offSetY_prev,
-        "\nOffset_1: ", offSetX_curr, ", ", offSetY_curr);
-
-    // let test3 = makeSVG('polygon', {
-    //   fill:"#7"+i+i+i+i+i,
-    //   points: ptsToString(nextPoints)
-    // })
-    // shards.push(test3);
 
     for(let j=0;j<points.length;j++){
       let a = j,                       //First point
@@ -71,12 +57,11 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
       } else {
         pointSet = pointSet.concat([points_Curr[b], points_Curr[a]]);
       }
-      console.log(j, ": ", pointSet);
-
 
       shards.push(makeSVG('polygon', {
-        class: "shard",
+        class: "shard shard-" + i + j,
         fill: "#7"+i+i+i+j+j,
+        onClick: onClick,
         points: ptsToString(pointSet)
       }));
 
@@ -87,6 +72,9 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
 
 }
 
+function onClick(e) {
+  console.log(e.target);
+}
 
 /**
  * Creates a pentagon at the given id with
@@ -98,4 +86,4 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
  * @param  {[int]} scaleY [scales in the y dimension] optional
  */
 // generatePentagon(500, 500, '#J-svg-pentagon', 1, 1, 0.9);
-generatePentagon(500, 500, '#J-svg-pentagon', 3, 1.10, 1);
+generatePentagon(500, 500, '#J-svg-pentagon', 4, 1.10, 1);
