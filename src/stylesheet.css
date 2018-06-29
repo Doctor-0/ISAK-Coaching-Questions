@@ -65,7 +65,7 @@ body {
     text-align: center;
     margin: auto auto auto auto;
     grid-column: 2;
-    grid-row: 2 / -1;
+    grid-row: 2 / 5;
 }
 .svg-pentagon svg {
 
