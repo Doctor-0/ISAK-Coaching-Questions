@@ -1,23 +1,73 @@
+/* UWC Standards
+Main Colors:
+  Blue - #0064a6
+  Green - #009b90
+
+Secondary Colors:
+  Brown - #983e09
+  Purple - #741669
+  Pink - #ad1644
+  Orange - #de6328
+  Cool Grey - #717073
+*/
+
 body {
-    font-size: 4em;
+  margin: 0 0;
+  font-family: 'Arial', 'sans-serif';
+    color: #000;
 }
 
+.wrapper {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 0.7fr;
+  grid-template-rows: auto 1fr 1fr 1fr;
+}
+
+.title {
+  color: #009b90;
+  grid-column: 1 / -1;
+  margin-left: 1.5em;
+  font-size: 1.5em;
+}
+
+.text {
+  margin: auto 3em;
+  font-size: 1.15em;
+  text-align: left;
+}
+
+.text strong {
+  color: #0064a6;
+}
+
+/* Left side */
+.text:nth-of-type(even){
+}
+
+/* Right side */
+.text:nth-of-type(odd){
+}
+
+/*** Pentagon ***/
 #svg-pentagon {
     text-align: center;
-    margin: 2em auto auto auto;
+    margin: auto auto auto auto;
+    grid-column: 2;
+    grid-row: 2 / -1;
 }
-    .svg-pentagon svg {
+.svg-pentagon svg {
 
-    }
-    .pentagon {
-      stroke-width:0.5px
-      -webkit-transform:rotate(36deg);
-      -moz-transform:rotate(36deg);
-      //transform:rotate(36deg);
-    }
-    /* .pentagon:hover {
-      fill: #2D2D2D;
-    } */
-    .shard:hover {
-    fill: #F2C1B6;
-    }
+}
+.pentagon {
+  stroke-width:0.5px
+  -webkit-transform:rotate(36deg);
+  -moz-transform:rotate(36deg);
+  //transform:rotate(36deg);
+}
+/* .pentagon:hover {
+  fill: #2D2D2D;
+} */
+.shard:hover {
+  fill: #F2C1B6;
+}

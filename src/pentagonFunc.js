@@ -8,10 +8,10 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
     // starting from the top most point
 
     let points = [[ptX/2, 0+offSetY], //Top most point
-                  [ptX-offSetX, ptY/2],
+                  [ptX-offSetX, (ptY+offSetY/2)/2.5],
                   [((3*ptX)/4)-(offSetX/2), ptY-offSetY],
                   [(ptX/4)+(offSetX/2), ptY-offSetY],
-                  [0+offSetX, (ptY)/2]];
+                  [0+offSetX, (ptY+offSetY/2)/2.5]];
     points.forEach((point) => {
       point[0] *= scaleX;
       point[1] *= scaleY;
@@ -60,8 +60,9 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
 
       shards.push(makeSVG('polygon', {
         class: "shard shard-" + i + j,
-        fill: "#7"+i+i+i+j+j,
-        onClick: onClick,
+        fill: "#cfecfe  ",
+        stroke: "#717073",
+        "stroke-width": 0.4 + (numLevels - (i))*0.6, //mx+c => m = rate of change of thickness; c = starting thickness
         points: ptsToString(pointSet)
       }));
 
@@ -86,4 +87,4 @@ function onClick(e) {
  * @param  {[int]} scaleY [scales in the y dimension] optional
  */
 // generatePentagon(500, 500, '#J-svg-pentagon', 1, 1, 0.9);
-generatePentagon(500, 500, '#J-svg-pentagon', 4, 1.10, 1);
+generatePentagon(425, 500, '#J-svg-pentagon', 4, 1.05, 0.85);

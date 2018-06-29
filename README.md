@@ -11,4 +11,5 @@ This is a diagram to help students show how far they've progressed in five diffe
 2. Should be able to reference how much of a section was selected
 
 ## TODO
-* Create an interactive SVG image
+* Make the pentagon highlight all points below it
+* Include Arial
