@@ -59,8 +59,8 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
       }
 
       shards.push(makeSVG('polygon', {
-        class: "shard shard-" + i + j,
-        fill: "#cfecfe  ",
+        class: "shard shard-" + j + i,
+        fill: "#"+i+i+"9b9" + (i+j),
         stroke: "#717073",
         "stroke-width": 0.4 + (numLevels - (i))*0.6, //mx+c => m = rate of change of thickness; c = starting thickness
         points: ptsToString(pointSet)
@@ -69,12 +69,23 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
     }
   }
 
+  function onEnter(e) {
+    let id = getID(e.target);
+    for(let i=id[1];i<=numLevels;i++){
+      $('.shard-' + id[0] + i).attr('fill', '#F2C1B6');
+    }
+  }
+
+  function onLeave(e) {
+    let id = getID(e.target);
+    for(let i=id[1];i<=numLevels;i++){
+      $('.shard-' + id[0] + i).attr('fill', "#"+id[0]+id[0]+"9b9" + (id[0] + i));
+    }
+
+  }
+
   $svg.append(shards);
-
-}
-
-function onClick(e) {
-  console.log(e.target);
+  $('.shard').hover(onEnter, onLeave);
 }
 
 /**

@@ -59,11 +59,21 @@ function makeSVG(tag, attrs) {
 }
 
 /**
- * Cnverts an array of array of points, into a string
+ * Converts an array of array of points, into a string
  * @param  {Array[Array[int,int]]} pts An array of points
  * @return {String}     Points separating x and y with a
  *                      comma, and each point with a space.
  */
 function ptsToString(pts){
   return pts.map((point) => point.join(',')).join(' ');
+}
+
+/**
+ * Gets the id of a shard from its event
+ * @param  {e.target} target [the event that was triggered]
+ * @return {Array[Int]}   [an array of ints, where int[0] = slice #; int[1] = shard #]
+ */
+function getID(target){
+  let id = target.classList[1].slice(-2).split('');
+  return id.map((char)=> parseInt(char));
 }
