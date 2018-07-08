@@ -60,12 +60,13 @@ function makeSVG(tag, attrs) {
 
 /**
  * Converts an array of array of points, into a string
+ * ex. [[223.125,0],[446.25,170],[334.6875,425]] => "223.125,0 446.25,170 334.6875,425"
  * @param  {Array[Array[int,int]]} pts An array of points
  * @return {String}     Points separating x and y with a
  *                      comma, and each point with a space.
  */
-function ptsToString(pts){
-  return pts.map((point) => point.join(',')).join(' ');
+function ptsToString(pts, btwn=' '){
+  return pts.map((point) => point.join(',')).join(btwn);
 }
 
 /**
