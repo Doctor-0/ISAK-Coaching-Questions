@@ -1,6 +1,23 @@
 
-const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
-  var $svg = $(id);
+const HIGH_LIGHT_COLOR = '#de6328';
+const HIGH_LIGHT_COLOR_SUB = '#ad5529'
+const NORMAL_COLOR = '#009b90';
+const STROKE_COLOR = '#717073';
+
+/**
+ * Creates a pentagon at the given id with
+ * @param  {int} x  [width of pentagon]
+ * @param  {int} y  [height of pentagon]
+ * @param  {string} id [id of SVG element to place pentagon]
+ * @param  {int} numLevels [the number of shards per slice]
+ * @param  {int} scaleX [scales in the x dimension] optional
+ * @param  {int} scaleY [scales in the y dimension] optional
+ * @param  {[[int, int]]} hashPoints [A set of points that are already highlighted]
+ */
+function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints) {
+  let startDate = new Date(); //DELETE
+
+  let $svg = $(id);
 
   //Calculates the points of the pentagon with
   function genPentagonPoints(ptX=x, ptY=y, offSetX=0, offSetY=0){
@@ -19,7 +36,7 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
     return points
   }
 
-  var points = genPentagonPoints();
+  let points = genPentagonPoints();
 
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
@@ -60,8 +77,8 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
 
       shards.push(makeSVG('polygon', {
         class: "shard shard-" + j + i,
-        fill: "#"+i+i+"9b9" + (i+j),
-        stroke: "#717073",
+        fill: NORMAL_COLOR,
+        stroke: STROKE_COLOR,
         "stroke-width": 0.4 + (numLevels - (i))*0.6, //mx+c => m = rate of change of thickness; c = starting thickness
         points: ptsToString(pointSet)
       }));
@@ -69,33 +86,58 @@ const generatePentagon = function(x, y, id, numLevels=0, scaleX=1, scaleY=1) {
     }
   }
 
-  function onEnter(e) {
-    let id = getID(e.target);
-    for(let i=id[1];i<=numLevels;i++){
-      $('.shard-' + id[0] + i).attr('fill', '#F2C1B6');
+  /**
+   * Updates the background color of a shard and cascades to lower shards
+   * @param  {[int, int]} points [description]
+   * @param  {String} color  [description]
+   * @return {[type]}        [description]
+   */
+  function updateShardsCascade(shard_id, color, cap=0) {
+    if(cap <= 0){
+      for(let i=shard_id[1];i<=numLevels;i++){
+        $('.shard-' + shard_id[0] + i).attr('fill', color);
+      }
+    } else {
+      for(let i=1;i<cap;i++){
+        $('.shard-' + shard_id[0] + i).attr('fill', color);
+      }
     }
+  }
+
+  function onEnter(e) {
+    let shard_id = getID(e.target);
+    updateShardsCascade(shard_id, HIGH_LIGHT_COLOR);
   }
 
   function onLeave(e) {
-    let id = getID(e.target);
-    for(let i=id[1];i<=numLevels;i++){
-      $('.shard-' + id[0] + i).attr('fill', "#"+id[0]+id[0]+"9b9" + (id[0] + i));
-    }
+    let shard_id = getID(e.target),
+        currHash = getHash(),
+        cap = currHash[shard_id[0]][1];
+    updateShardsCascade(shard_id, NORMAL_COLOR, cap);
+  }
 
+  function onClick(e) {
+    let shard_id = getID(e.target);
+    setHash(shard_id);
+  }
+
+  function onDblClick(e) {
+    let shard_id = getID(e.target);
+    updateShardsCascade(shard_id, NORMAL_COLOR);
+    shard_id[1] = 0;
+    setHash(shard_id);
   }
 
   $svg.append(shards);
-  $('.shard').hover(onEnter, onLeave);
+  $('.shard').hover(onEnter, onLeave); // Adds hover effect
+  $('.shard').click(onClick); // Locks in the shard colors
+  $('.shard').dblclick(onDblClick); // Resets the shard
+  // Changes the background color of the background shards
+  // based on the hashPoints array
+  for(let i=0;i<hashPoints.length;i++){
+    if(hashPoints[i][1] !== 0){
+      updateShardsCascade(hashPoints[i], HIGH_LIGHT_COLOR);
+    }
+  }
+  console.log('ms: ', (new Date()) - startDate,' | ', hashPoints);
 }
-
-/**
- * Creates a pentagon at the given id with
- * @param  {[int]} x  [width of pentagon]
- * @param  {[int]} y  [height of pentagon]
- * @param  {[string]} id [id of SVG element to place pentagon]
- * @param  {[int]} numLevels [the number of shards per slice]
- * @param  {[int]} scaleX [scales in the x dimension] optional
- * @param  {[int]} scaleY [scales in the y dimension] optional
- */
-// generatePentagon(500, 500, '#J-svg-pentagon', 1, 1, 0.9);
-generatePentagon(425, 500, '#J-svg-pentagon', 4, 1.05, 0.85);

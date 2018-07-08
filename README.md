@@ -11,5 +11,9 @@ This is a diagram to help students show how far they've progressed in five diffe
 2. Should be able to reference how much of a section was selected
 
 ## TODO
-* Make the pentagon highlight all points below it
-* Include Arial
+* ~~Make the pentagon highlight all points below it~~
+* ~~Include Arial~~
+* Fix the color gradient of shards
+
+## BUGS
+* When you `dblclick()` on a triangle shard, if the mouse does not hover hover the other pieces, they will not change back to `NORMAL_COLOR`
