@@ -79,7 +79,8 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
         class: "shard shard-" + j + i,
         fill: NORMAL_COLOR,
         stroke: STROKE_COLOR,
-        "stroke-width": 0.4 + (numLevels - (i))*0.6, //mx+c => m = rate of change of thickness; c = starting thickness
+        "stroke-dasharray": ((i+1) % 2 === 0) ? 0 : '4 4',
+        "stroke-width": 0.4 + (numLevels - (i))*0.2, //mx+c => m = rate of change of thickness; c = starting thickness
         points: ptsToString(pointSet)
       }));
 
