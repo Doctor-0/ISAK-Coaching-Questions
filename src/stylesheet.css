@@ -87,6 +87,12 @@ strong {
   color: #0064a6;
 }
 
+small {
+  font-size: 0.75em;
+  color: #000;
+  opacity: 0.5;
+}
+
 /*** Popup ***/
 .popup {
   z-index: 30;
