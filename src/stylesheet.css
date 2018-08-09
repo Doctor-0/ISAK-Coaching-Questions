@@ -69,7 +69,7 @@ body {
   z-index: 0;
 }
 
-.shard-label {
+.label {
   fill: #717073;
   font-size: 1.5em;
   z-index: 25;
