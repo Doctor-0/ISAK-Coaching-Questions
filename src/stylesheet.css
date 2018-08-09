@@ -81,6 +81,12 @@ body {
   margin: auto 3em;
   font-size: 1.15em;
   text-align: left;
+  padding: 1em;
+}
+
+div .text:hover {
+  box-shadow: -3px 0px 1px 0px #0064a6;
+
 }
 
 strong {
