@@ -17,7 +17,6 @@ $(document).ready(function() {
 
   // Sets the popup window with 'coaching questions' when clicked
   function onClick(e) {
-    console.log("teehee");
     let $popup = document.getElementById('popup-' + e.target.classList[1]);
     $popup.classList.toggle('hide');
   }
@@ -30,6 +29,10 @@ $(document).ready(function() {
       $('.shard-' + shard_id[0] + i).attr('opacity', val);
     }
   }
+
+  $(".close-button").click(function(e) {
+    document.getElementById(e.target.parentNode.id).classList.toggle('hide');
+  });
 
   // Awareness
   $(".awareness").click(onClick);
