@@ -41,12 +41,6 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
 
-  //3. Set width and height of frame pointsd on points
-  $svg.attr({
-    width: points[1][0], //points[1][0] is the right-most point
-    height: points[2][1] //points[2][1] || points[3][1] is the bottom-most point
-  });
-
   //4. Generate the pentagon
   $svg.find('.pentagon').attr('points', ptsToString(points))
 
@@ -79,8 +73,8 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
         class: "shard shard-" + j + i,
         fill: NORMAL_COLOR,
         stroke: STROKE_COLOR,
-        "stroke-dasharray": ((i+1) % 2 === 0) ? 0 : '4 4',
-        "stroke-width": 0.4 + (numLevels - (i))*0.2, //mx+c => m = rate of change of thickness; c = starting thickness
+        "stroke-dasharray": ((i+1) % 2 === 0) ? 0 : '4 4', // '4 4' indicates the spacing between lines in '0.5' row
+        "stroke-width": ((i+1) % 2 === 0) ? 1 : 2, //0.4 + (numLevels - (i))*0.3, //mx+c => m = rate of change of thickness; c = starting thickness
         points: ptsToString(pointSet)
       }));
 
@@ -141,4 +135,20 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
     }
   }
   console.log('ms: ', (new Date()) - startDate,' | ', hashPoints);
+  return points;
+}
+
+function generateText(points, id) {
+  const textPoints = [];
+
+  for(let i=0;i<points.length;i++){
+    let a = i,                       //First point
+        b = (i+1) % (points.length), //Second Point
+        pointSet = [points[a],points[b]],
+        mid = midPoint(pointSet);
+
+    textPoints.push(mid);
+  }
+
+  return textPoints;
 }
