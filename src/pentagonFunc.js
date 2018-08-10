@@ -41,6 +41,8 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
 
+  console.log(center, points);
+
   //4. Generate the pentagon
   $svg.find('.pentagon').attr('points', ptsToString(points))
 

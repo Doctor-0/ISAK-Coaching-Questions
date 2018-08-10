@@ -16,7 +16,7 @@ This is a diagram to help students show how far they've progressed in five diffe
 * Fix the color gradient of shards
 * ~~Add labels for each shard~~
 * Title editable
-* Fix UWC logo
+* ~~Fix UWC logo~~
 
 ### Coaching Questions
 * ~~Make new coaching questions, questions are editable~~

@@ -14,6 +14,16 @@ $(document).ready(function() {
     height: points[2][1] //points[2][1] || points[3][1] is the bottom-most point
   });
 
+  // Adds the level labels
+  for(let i=0;i<4;i++){
+      let el = makeSVG('text', {
+        x:223.125,
+        y:(53.125*i),
+        class: 'level'
+      })
+      el.textContent = 4-i;
+      $("#J-svg-pentagon").append(el);
+  }
 
   // Sets the popup window with 'coaching questions' when clicked
   function onClick(e) {
@@ -37,10 +47,12 @@ $(document).ready(function() {
   // Awareness
   $(".awareness").click(onClick);
   $(".awareness").hover(function(e) {
+    $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
      updateShardsCascade([2,0], opacity); //Self-Disciplined
      updateShardsCascade([3,0], opacity); //Creative
   }, function(e) {
+    $(".level").attr('opacity', 1)
     updateShardsCascade([0,0]); //Action-Taking
     updateShardsCascade([2,0]); //Awareness
     updateShardsCascade([3,0]); //Awareness
@@ -49,10 +61,12 @@ $(document).ready(function() {
   // Connecting
   $(".connecting").click(onClick);
   $(".connecting").hover(function(e) {
+    $(".level").attr('opacity', opacity)
      updateShardsCascade([2,0], opacity); //Self-Disciplined
      updateShardsCascade([3,0], opacity); //Creative
      updateShardsCascade([4,0], opacity); //Awareness
   }, function(e) {
+    $(".level").attr('opacity', 1)
     updateShardsCascade([2,0]); //Self-Disciplined
     updateShardsCascade([3,0]); //Creative
     updateShardsCascade([4,0]); //Awareness
@@ -61,9 +75,11 @@ $(document).ready(function() {
   // Creative
   $(".creative").click(onClick);
   $(".creative").hover(function(e) {
+    $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
      updateShardsCascade([4,0], opacity); //Awareness
   }, function(e) {
+    $(".level").attr('opacity', 1)
     updateShardsCascade([0,0]); //Action-Taking
     updateShardsCascade([4,0]); //Awareness
   });
@@ -71,10 +87,12 @@ $(document).ready(function() {
   // Action
   $(".action").click(onClick);
   $(".action").hover(function(e) {
+    $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
      updateShardsCascade([3,0], opacity); //Creative
      updateShardsCascade([4,0], opacity); //Awareness
   }, function(e) {
+    $(".level").attr('opacity', 1)
     updateShardsCascade([0,0]); //Connecting
     updateShardsCascade([3,0]); //Creative
     updateShardsCascade([4,0]); //Awareness
@@ -83,10 +101,12 @@ $(document).ready(function() {
   // Disciplined
   $(".disciplined").click(onClick);
   $(".disciplined").hover(function(e) {
+    $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
      updateShardsCascade([1,0], opacity); //Action-Taking
      updateShardsCascade([3,0], opacity); //Creative
   }, function(e) {
+    $(".level").attr('opacity', 1)
     updateShardsCascade([0,0]); //Connecting
     updateShardsCascade([1,0]); //Action-Taking
     updateShardsCascade([3,0]); //Creative
