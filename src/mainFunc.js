@@ -27,6 +27,7 @@ $(document).ready(function() {
 
   // Sets the popup window with 'coaching questions' when clicked
   function onClick(e) {
+    console.log(e.target);
     let $popup = document.getElementById('popup-' + e.target.classList[1]);
     $popup.classList.toggle('hide');
   }
