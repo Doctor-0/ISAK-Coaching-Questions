@@ -25,13 +25,6 @@ $(document).ready(function() {
       $("#J-svg-pentagon").append(el);
   }
 
-  // Sets the popup window with 'coaching questions' when clicked
-  function onClick(e) {
-    console.log(e.target);
-    let $popup = document.getElementById('popup-' + e.target.classList[1]);
-    $popup.classList.toggle('hide');
-  }
-
   // Sets the hovering effect
   const opacity=0.15;
 
@@ -41,12 +34,7 @@ $(document).ready(function() {
     }
   }
 
-  $(".close-button").click(function(e) {
-    document.getElementById(e.target.parentNode.id).classList.toggle('hide');
-  });
-
   // Awareness
-  $(".awareness").click(onClick);
   $(".awareness").hover(function(e) {
     $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
@@ -60,7 +48,6 @@ $(document).ready(function() {
   });
 
   // Connecting
-  $(".connecting").click(onClick);
   $(".connecting").hover(function(e) {
     $(".level").attr('opacity', opacity)
      updateShardsCascade([2,0], opacity); //Self-Disciplined
@@ -74,7 +61,6 @@ $(document).ready(function() {
   });
 
   // Creative
-  $(".creative").click(onClick);
   $(".creative").hover(function(e) {
     $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
@@ -86,7 +72,6 @@ $(document).ready(function() {
   });
 
   // Action
-  $(".action").click(onClick);
   $(".action").hover(function(e) {
     $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
@@ -100,7 +85,6 @@ $(document).ready(function() {
   });
 
   // Disciplined
-  $(".disciplined").click(onClick);
   $(".disciplined").hover(function(e) {
     $(".level").attr('opacity', opacity)
      updateShardsCascade([0,0], opacity); //Connecting
