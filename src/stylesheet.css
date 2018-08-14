@@ -17,6 +17,10 @@ body {
     color: #000;
 }
 
+h1 {
+  font-size: 3em;
+}
+
 .wrapper {
   height: 100vh;
   display: grid;
@@ -34,7 +38,6 @@ body {
 
 .title h1 {
   float:left;
-  font-size: 3em;
 }
 
 .UWC-logo {
@@ -65,7 +68,6 @@ table {
 }
 
 .menuItem:hover {
-  font-size: 1em;
   color: #de6328;
 }
 
@@ -75,8 +77,9 @@ table {
 
 /*** Text ***/
 .text {
-  font-size: 0.75em;
+  font-size: 1em;
   text-align: left;
+  margin: auto auto;
   /* padding: 0.5em; */
 }
 
