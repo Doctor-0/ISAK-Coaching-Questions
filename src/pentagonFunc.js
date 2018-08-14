@@ -41,7 +41,11 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
 
-  console.log(center, points);
+  //3. Set width and height of frame point on points
+  $("#J-svg-pentagon").attr({
+    width: points[1][0], //points[1][0] is the right-most point
+    height: points[2][1] //points[2][1] || points[3][1] is the bottom-most point
+  });
 
   //4. Generate the pentagon
   $svg.find('.pentagon').attr('points', ptsToString(points))
@@ -109,26 +113,28 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
   function onLeave(e) {
     let shard_id = getID(e.target),
         currHash = getHash(),
-        cap = currHash[shard_id[0]][1];
-    updateShardsCascade(shard_id, NORMAL_COLOR, cap);
+        cap = currHash[currHash['page']][shard_id[0]];
+    console.log(cap);
+    updateShardsCascade(shard_id, NORMAL_COLOR, cap[1]);
   }
 
   function onClick(e) {
     let shard_id = getID(e.target);
-    setHash(shard_id);
+    setCoords(shard_id);
   }
 
   function onDblClick(e) {
     let shard_id = getID(e.target);
     updateShardsCascade(shard_id, NORMAL_COLOR);
     shard_id[1] = 0;
-    setHash(shard_id);
+    setCoords(shard_id);
   }
 
   $svg.append(shards);
   $('.shard').hover(onEnter, onLeave); // Adds hover effect
   $('.shard').click(onClick); // Locks in the shard colors
   $('.shard').dblclick(onDblClick); // Resets the shard
+
   // Changes the background color of the background shards
   // based on the hashPoints array
   for(let i=0;i<hashPoints.length;i++){
@@ -136,6 +142,7 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
       updateShardsCascade(hashPoints[i], HIGH_LIGHT_COLOR);
     }
   }
+
   console.log('ms: ', (new Date()) - startDate,' | ', hashPoints);
   return points;
 }

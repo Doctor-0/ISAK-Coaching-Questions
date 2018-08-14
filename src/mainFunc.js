@@ -1,23 +1,24 @@
-$(document).ready(function() {
-  const id = '#svg-pentagon',
-        numLevels = 8,
-        DEFAULT_TITLE = 'Click me to edit';
+const id = '#svg-pentagon',
+      numLevels = 8,
+      DEFAULT_TITLE = 'Click me to edit';
 
+var defaultState = {
+  'page' : 0,
+  0 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
+  1 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
+  2 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
+  'title': DEFAULT_TITLE,
+}
+
+$(document).ready(function() {
   //Sets the initial hash
   if(window.location.hash == ""){
-    window.location.hash = '0,0&0,0&0,0&0,0&0,0&' + DEFAULT_TITLE;
+    window.location.hash = JSON.stringify(defaultState)
   }
 
   let currHash = getHash();
-      currTitle = currHash.pop();
 
-  let points = generatePentagon(425, 500, id, numLevels, 1.05, 0.85, currHash);
-
-  //3. Set width and height of frame point on points
-  $("#J-svg-pentagon").attr({
-    width: points[1][0], //points[1][0] is the right-most point
-    height: points[2][1] //points[2][1] || points[3][1] is the bottom-most point
-  });
+  generatePentagon(425, 500, id, numLevels, 1.05, 0.85, currHash[currHash['page']]);
 
   // Adds the level labels
   for(let i=0;i<4;i++){
@@ -30,6 +31,7 @@ $(document).ready(function() {
       $("#J-svg-pentagon").append(el);
   }
 
+  /** TEXT INTERACTION W/ SHARDS **/
   // Sets the hovering effect
   const opacity=0.15;
 
@@ -104,15 +106,22 @@ $(document).ready(function() {
 
   //** TITLE **//
   // Adds editing functionality to the title
-  if($('#title-text').text() !== currTitle ){
-    $('#title-text').text(currTitle);
+  if($('#title-text').text() !== currHash['title'] ){
+    $('#title-text').text(currHash['title']);
   }
 
   $('#title-text').on('blur', function() {
     let text = $(this)[0].innerText;
-    setTitle(text);
+    setHash('title',text);
   });
   // Prevents new line from being usable when editing
   $('#title-text').keypress(function(e){return e.key != 'Enter'; });
+
+  //** MENU ITEMS **//
+  $('.menuItem').click(function(e) {
+    let newPage = e.target.classList[1].slice(-1)
+    setHash('page', newPage);
+    
+  })
 
 })
