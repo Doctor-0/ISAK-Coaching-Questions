@@ -126,16 +126,23 @@ $(document).ready(function() {
   //** MENU ITEMS **//
 
   // Updates the menu item of the current class
-  $('.item-'+currHash['page']).addClass('selected')
+  $('.item-'+currHash['page']).addClass('selected');
+  $('.page-'+currHash['page']).addClass('show');
 
   //Updates the pentagon when a menuItem is clicked
   $('.menuItem').click(function(e) {
     let newPage = e.target.classList[1].slice(-1),
-        currState = setHash('page', newPage);
+        state = getHash();
+        newState = setHash('page', newPage);
+
     $('.selected').toggleClass('selected');
     $('.item-'+newPage).addClass('selected');
+
+    $('.show').toggleClass('show');
+    $('.page-'+newPage).addClass('show');
+
     $(ID).empty();
-    generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, currState[newPage]);
+    generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, newState[newPage]);
   })
 
   console.log('ms: ', (new Date()) - startDate,' | ', currHash);

@@ -36,10 +36,6 @@ h1 {
   background-color: #009b90;
 }
 
-.title h1 {
-  float:left;
-}
-
 .UWC-logo {
   float: left;
   width: 8.5em;
@@ -99,6 +95,15 @@ small {
   font-size: 0.75em;
   color: #000;
   opacity: 0.5;
+}
+
+/* Pages are hidden by default */
+.page {
+  display: none;
+}
+
+.show {
+  display: inherit;
 }
 
 /*** Pentagon ***/
