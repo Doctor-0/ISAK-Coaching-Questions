@@ -21,10 +21,10 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 0.6fr 1fr 0.6fr;
-  grid-template-rows: auto 1fr 1fr 1fr 0.2fr;
+  grid-template-rows: 0.5fr 1.25em 1fr 1fr 1fr 0.2fr;
 }
 
-.title, .footer {
+.title, .footer, .menu {
   color: #FFF;
   grid-column: 1 / -1;
   display:inline-block;
@@ -43,14 +43,6 @@ body {
   margin: auto 0.75em auto 1em;
 }
 
-/* Left side */
-.text:nth-of-type(even){
-}
-
-/* Right side */
-.text:nth-of-type(odd){
-}
-
 table {
   border: 1px solid black;
   margin: auto 3em;
@@ -59,6 +51,26 @@ table {
 
 .table-level {
   font-size: 1.5em;
+}
+
+.menu {
+  grid-row: 2;
+  color: #FFF;
+  text-align: center;
+  background-color: #0064a6;
+}
+
+.menuItem {
+  margin-left: 0.5em;
+}
+
+.menuItem:hover {
+  font-size: 1em;
+  color: #de6328;
+}
+
+.selected {
+  color: #de6328;
 }
 
 /*** Text ***/
@@ -91,7 +103,7 @@ small {
     text-align: center;
     margin: auto auto auto auto;
     grid-column: 2;
-    grid-row: 2 / 5;
+    grid-row: 3 / 6;
     overflow: visible;
 }
 

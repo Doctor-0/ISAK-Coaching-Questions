@@ -1,4 +1,8 @@
-const id = '#svg-pentagon',
+const ID = '#svg-pentagon',
+      WIDTH = 425,
+      HEIGHT = 500,
+      SCALEX = 1.05,
+      SCALEY = 0.85
       numLevels = 8,
       DEFAULT_TITLE = 'Click me to edit';
 
@@ -11,6 +15,8 @@ var defaultState = {
 }
 
 $(document).ready(function() {
+  let startDate = new Date(); //DELETE
+
   //Sets the initial hash
   if(window.location.hash == ""){
     window.location.hash = JSON.stringify(defaultState)
@@ -18,7 +24,7 @@ $(document).ready(function() {
 
   let currHash = getHash();
 
-  generatePentagon(425, 500, id, numLevels, 1.05, 0.85, currHash[currHash['page']]);
+  generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, currHash[currHash['page']]);
 
   // Adds the level labels
   for(let i=0;i<4;i++){
@@ -118,10 +124,19 @@ $(document).ready(function() {
   $('#title-text').keypress(function(e){return e.key != 'Enter'; });
 
   //** MENU ITEMS **//
+
+  // Updates the menu item of the current class
+  $('.item-'+currHash['page']).addClass('selected')
+
+  //Updates the pentagon when a menuItem is clicked
   $('.menuItem').click(function(e) {
-    let newPage = e.target.classList[1].slice(-1)
-    setHash('page', newPage);
-    
+    let newPage = e.target.classList[1].slice(-1),
+        currState = setHash('page', newPage);
+    $('.selected').toggleClass('selected');
+    $('.item-'+newPage).addClass('selected');
+    $(ID).empty();
+    generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, currState[newPage]);
   })
 
+  console.log('ms: ', (new Date()) - startDate,' | ', currHash);
 })

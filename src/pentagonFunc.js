@@ -15,8 +15,6 @@ const STROKE_COLOR = '#717073';
  * @param  {[[int, int]]} hashPoints [A set of points that are already highlighted]
  */
 function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints) {
-  let startDate = new Date(); //DELETE
-
   let $svg = $(id);
 
   //Calculates the points of the pentagon with
@@ -114,7 +112,6 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
     let shard_id = getID(e.target),
         currHash = getHash(),
         cap = currHash[currHash['page']][shard_id[0]];
-    console.log(cap);
     updateShardsCascade(shard_id, NORMAL_COLOR, cap[1]);
   }
 
@@ -143,7 +140,6 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
     }
   }
 
-  console.log('ms: ', (new Date()) - startDate,' | ', hashPoints);
   return points;
 }
 
