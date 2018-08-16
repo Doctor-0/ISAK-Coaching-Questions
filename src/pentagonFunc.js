@@ -17,11 +17,10 @@ const STROKE_COLOR = '#717073';
 function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints) {
   let $svg = $(id);
 
-  //Calculates the points of the pentagon with
+  // 1. Calculates the points of the pentagon with
+  // Points follow clockwise around the pentagon,
+  // starting from the top most point
   function genPentagonPoints(ptX=x, ptY=y, offSetX=0, offSetY=0){
-    // 2. Points follow clockwise around the pentagon,
-    // starting from the top most point
-
     let points = [[ptX/2, 0+offSetY], //Top most point
                   [ptX-offSetX, (ptY+offSetY/2)/2.5],
                   [((3*ptX)/4)-(offSetX/2), ptY-offSetY],
@@ -39,16 +38,16 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
   //Calculate center
   let center = [(x*scaleX)/2, (y*scaleY)/2];
 
-  //3. Set width and height of frame point on points
+  //2. Set width and height of frame point on points
   $("#J-svg-pentagon").attr({
     width: points[1][0], //points[1][0] is the right-most point
     height: points[2][1] //points[2][1] || points[3][1] is the bottom-most point
   });
 
-  //4. Generate the pentagon
+  //3. Generate the pentagon
   $svg.find('.pentagon').attr('points', ptsToString(points))
 
-  // 5. Generate the individual shards shards pointsd on the {numShards}
+  // 4. Generate the individual shards shards pointsd on the {numShards}
   // Each shard uses the previous two points to calculate its' own
   // points.
   let shards = [];
@@ -127,10 +126,11 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
     setCoords(shard_id);
   }
 
+  // 5. Adds the above functionality to the individual shards
   $svg.append(shards);
   $('.shard').hover(onEnter, onLeave); // Adds hover effect
-  $('.shard').click(onClick); // Locks in the shard colors
-  $('.shard').dblclick(onDblClick); // Resets the shard
+  $('.shard').click(onClick);          // Locks in the shard colors
+  $('.shard').dblclick(onDblClick);   // Resets the shard
 
   // Changes the background color of the background shards
   // based on the hashPoints array
@@ -139,21 +139,5 @@ function generatePentagon (x, y, id, numLevels=0, scaleX=1, scaleY=1, hashPoints
       updateShardsCascade(hashPoints[i], HIGH_LIGHT_COLOR);
     }
   }
-
   return points;
-}
-
-function generateText(points, id) {
-  const textPoints = [];
-
-  for(let i=0;i<points.length;i++){
-    let a = i,                       //First point
-        b = (i+1) % (points.length), //Second Point
-        pointSet = [points[a],points[b]],
-        mid = midPoint(pointSet);
-
-    textPoints.push(mid);
-  }
-
-  return textPoints;
 }

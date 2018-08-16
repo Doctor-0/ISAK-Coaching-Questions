@@ -13,9 +13,9 @@ This is a diagram to help students show how far they've progressed in five diffe
 ## TODO
 * ~~Make the pentagon highlight all points below it~~
 * ~~Include Arial~~
-* Fix the color gradient of shards
+* ~~Fix the color gradient of shards~~
 * ~~Add labels for each shard~~
-* Title editable
+* ~~Title editable~~
 * ~~Fix UWC logo~~
 * ~~Make leadership assessment title editable~~
 

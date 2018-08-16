@@ -3,7 +3,7 @@ const ID = '#svg-pentagon',
       HEIGHT = 500,
       SCALEX = 1.05,
       SCALEY = 0.85
-      numLevels = 8,
+      NUM_LEVELS = 8,
       DEFAULT_TITLE = 'Click me to edit';
 
 var defaultState = {
@@ -11,20 +11,22 @@ var defaultState = {
   0 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
   1 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
   2 : [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]],
-  'title': DEFAULT_TITLE,
+  'title': DEFAULT_TITLE
 }
 
 $(document).ready(function() {
   let startDate = new Date(); //DELETE
 
   //Sets the initial hash
+  let currHash;
   if(window.location.hash == ""){
-    window.location.hash = JSON.stringify(defaultState)
+    window.location.hash = JSON.stringify(defaultState);
+    currHash = defaultState;
+  } else {
+    currHash = getHash();
   }
 
-  let currHash = getHash();
-
-  generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, currHash[currHash['page']]);
+  generatePentagon(WIDTH, HEIGHT, ID, NUM_LEVELS, SCALEX, SCALEY, currHash[currHash['page']]);
 
   // Adds the level labels
   for(let i=0;i<4;i++){
@@ -42,7 +44,7 @@ $(document).ready(function() {
   const opacity=0.15;
 
   function updateShardsCascade(shard_id, val=1) {
-    for(let i=shard_id[1];i<=numLevels;i++){
+    for(let i=shard_id[1];i<=NUM_LEVELS;i++){
       $('.shard-' + shard_id[0] + i).attr('opacity', val);
     }
   }
@@ -124,7 +126,6 @@ $(document).ready(function() {
   $('#title-text').keypress(function(e){return e.key != 'Enter'; });
 
   //** MENU ITEMS **//
-
   // Updates the menu item of the current class
   $('.item-'+currHash['page']).addClass('selected');
   $('.page-'+currHash['page']).addClass('show');
@@ -142,7 +143,7 @@ $(document).ready(function() {
     $('.page-'+newPage).addClass('show');
 
     $(ID).empty();
-    generatePentagon(WIDTH, HEIGHT, ID, numLevels, SCALEX, SCALEY, newState[newPage]);
+    generatePentagon(WIDTH, HEIGHT, ID, NUM_LEVELS, SCALEX, SCALEY, newState[newPage]);
   })
 
   console.log('ms: ', (new Date()) - startDate,' | ', currHash);
